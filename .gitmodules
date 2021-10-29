@@ -1,0 +1,10 @@
+[submodule "ilikehaskellblog/themes/ananke"]
+	path = ilikehaskellblog/themes/ananke
+	url = https://github.com/theNewDynamic/gohugo-theme-ananke.git
+[submodule "ilikehaskellblog/public"]
+	path = ilikehaskellblog/public
+	url = https://github.com/ilikehaskell/ilikehaskell.github.io
+	branch = master
+[submodule "ilikehaskellblog/themes/even"]
+	path = ilikehaskellblog/themes/even
+	url = https://github.com/olOwOlo/hugo-theme-even
