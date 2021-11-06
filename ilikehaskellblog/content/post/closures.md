@@ -199,12 +199,12 @@ What happened? It seems that only the last function was applied. Let's look at t
 
 ```python
 for labeling_function in labeling_functions:
-    print(labeling_functions)
+    print(labeling_function)
 ```
 
-    [<function labeling_function at 0x7fa698152b80>, <function labeling_function at 0x7fa698152550>, <function labeling_function at 0x7fa698152a60>]
-    [<function labeling_function at 0x7fa698152b80>, <function labeling_function at 0x7fa698152550>, <function labeling_function at 0x7fa698152a60>]
-    [<function labeling_function at 0x7fa698152b80>, <function labeling_function at 0x7fa698152550>, <function labeling_function at 0x7fa698152a60>]
+    <bound method LabelingCallable.labeling_function of <__main__.LabelingCallable object at 0x7fa6981669a0>>
+    <bound method LabelingCallable.labeling_function of <__main__.LabelingCallable object at 0x7fa698166d30>>
+    <bound method LabelingCallable.labeling_function of <__main__.LabelingCallable object at 0x7fa698166940>>
 
 
 They point to the same memory address. This is because Python redefines functions in place. 
