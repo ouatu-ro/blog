@@ -1,0 +1,16 @@
+---
+title: "Mvp Tips"
+date: 2022-03-28T00:29:54+03:00
+draft: true
+---
+
+Don't give users the responsibility of finding the optimal way to solve their problem under the pretext of flexibility (users literally told me this). Put it another way, be opinionated.
+Don’t try to solve more than one problem. Put it another way, be opinionated.
+Get fast feedback on your opinionated design and iterate. Best way is to find a possible user, give them the app link and observe what they do.
+Try to record or take notes on the user interview
+When iterating, you’ll see that you’ll probably delete code and become even more opinionated
+reuse code and you’ll see that an even simpler solution would have done a better job (even for the problem the reused code comes from)
+
+For analytics tools:
+be sure that it’s clear what controls are associated with what view
+
