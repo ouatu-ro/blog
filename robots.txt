@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: http://ilikehaskell.hithub.io/sitemap.xml
+Sitemap: http://ouatu.ro/sitemap.xml
