@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: http://ouatu.ro/sitemap.xml
+Sitemap: http://ouatu.ro/blog/sitemap.xml
