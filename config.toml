@@ -28,11 +28,14 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
   priority = 0.5
   filename = "sitemap.xml"
 
+[permalinks]
+  post = "/:filename/"
+
 [[menu.main]]             # config your menu              # 配置目录
   name = "Home"
   weight = 10
   identifier = "home"
-  url = "/blog/"
+  url = "/"
 [[menu.main]]
   name = "Archives"
   weight = 20
