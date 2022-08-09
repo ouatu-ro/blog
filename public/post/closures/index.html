@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FWXVQ3N6SL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FWXVQ3N6SL');
+</script>
+  
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title>Friendly Python Clojures in an automatic Text Annotator - Bogdan&#39;s Technical Blog</title>
@@ -24,7 +35,7 @@ It&amp;rsquo;s closures. They&amp;rsquo;re there thanks to your language having 
 
 
 
-<meta name="generator" content="Hugo 0.92.2 with theme even" />
+<meta name="generator" content="Hugo 0.101.0 with theme even" />
 
 
 <link rel="canonical" href="http://ouatu.ro/blog/post/closures/" />
@@ -52,7 +63,7 @@ It&rsquo;s closures. They&rsquo;re there thanks to your language having first-cl
 <meta itemprop="description" content="While creating some pipelines for automatic text annotation, I encountered a bug that made me realise that I didn&rsquo;t really get the gist of a basic block of programming.
 It&rsquo;s closures. They&rsquo;re there thanks to your language having first-class functions and you may have encountered them in academia or some programming tutorial, even used them in some toy examples. I know I had. Closures in a sandbox are straight forward. Still, you may not know their power until you&rsquo;d seen them in the wild."><meta itemprop="datePublished" content="2021-11-06T02:53:16+02:00" />
 <meta itemprop="dateModified" content="2021-11-06T02:53:16+02:00" />
-<meta itemprop="wordCount" content="1780">
+<meta itemprop="wordCount" content="1776">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Friendly Python Clojures in an automatic Text Annotator"/>
 <meta name="twitter:description" content="While creating some pipelines for automatic text annotation, I encountered a bug that made me realise that I didn&rsquo;t really get the gist of a basic block of programming.
@@ -71,7 +82,7 @@ It&rsquo;s closures. They&rsquo;re there thanks to your language having first-cl
 <body>
   <div id="mobile-navbar" class="mobile-navbar">
   <div class="mobile-header-logo">
-    <a href="/blog/" class="logo">Bogdan&#39;s Technical Blog</a>
+    <a href="/" class="logo">Bogdan&#39;s Technical Blog</a>
   </div>
   <div class="mobile-navbar-icon">
     <span></span>
@@ -81,7 +92,7 @@ It&rsquo;s closures. They&rsquo;re there thanks to your language having first-cl
 </div>
 <nav id="mobile-menu" class="mobile-menu slideout-menu">
   <ul class="mobile-menu-list">
-    <a href="/blog/blog/">
+    <a href="/blog/">
         <li class="mobile-menu-item">Home</li>
       </a><a href="/blog/post/">
         <li class="mobile-menu-item">Archives</li>
@@ -100,7 +111,7 @@ It&rsquo;s closures. They&rsquo;re there thanks to your language having first-cl
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
-  <a href="/blog/" class="logo">Bogdan&#39;s Technical Blog</a>
+  <a href="/" class="logo">Bogdan&#39;s Technical Blog</a>
 </div>
 
 
@@ -110,7 +121,7 @@ It&rsquo;s closures. They&rsquo;re there thanks to your language having first-cl
 <nav class="site-navbar">
   <ul id="menu" class="menu">
     <li class="menu-item">
-        <a class="menu-item-link" href="/blog/blog/">Home</a>
+        <a class="menu-item-link" href="/blog/">Home</a>
       </li><li class="menu-item">
         <a class="menu-item-link" href="/blog/post/">Archives</a>
       </li><li class="menu-item">
@@ -178,18 +189,18 @@ Central to this package are the <code>Doc</code> objects (short for document). I
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span>
-
-<span class="k">class</span> <span class="nc">Doc</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">spans</span><span class="p">:</span> <span class="n">Span</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tokens</span><span class="p">)</span>
-    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span><span class="p">[</span><span class="n">position</span><span class="p">]</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Doc</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">spans</span><span class="p">:</span> <span class="n">Span</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tokens</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span><span class="p">[</span><span class="n">position</span><span class="p">]</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>By implementing <code>__len__</code> and <code>__getitem__</code> <a href="https://www.geeksforgeeks.org/dunder-magic-methods-python/">double-under functions</a> we got the ability to iterate through the Doc&rsquo;s tokens with a simple for as below. This is thanks to the Python datamodel. It&rsquo;s outside the scope of this post, but learning to leverage the datamodel will pay dividends on your effectiveness in Python. The first chapter of <a href="https://learning.oreilly.com/library/view/fluent-python/9781491946237/">Fluent Python</a> introduces it in the first chapter in a very neat way. If you like video format more, <a href="https://www.youtube.com/watch?v=AmHE0kZhLIQ">James Powell</a> got you covered.</p>
 <div class="highlight"><div class="chroma">
@@ -199,10 +210,10 @@ Central to this package are the <code>Doc</code> objects (short for document). I
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="n">doc</span> <span class="o">=</span> <span class="n">Doc</span><span class="p">(</span><span class="s2">&#34;Today I ate garbonzo beans&#34;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">doc</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">doc</span> <span class="o">=</span> <span class="n">Doc</span><span class="p">(</span><span class="s2">&#34;Today I ate garbonzo beans&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">doc</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><pre><code>Today
 I
@@ -218,16 +229,14 @@ beans
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
-</span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">NamedTuple</span>
-
-<span class="k">class</span> <span class="nc">Span</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
-    <span class="n">position</span><span class="p">:</span> <span class="nb">int</span>
-    <span class="n">label</span><span class="p">:</span> <span class="nb">str</span>
-
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">NamedTuple</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Span</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">position</span><span class="p">:</span> <span class="nb">int</span>
+</span></span><span class="line"><span class="cl">    <span class="n">label</span><span class="p">:</span> <span class="nb">str</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h1 id="skweak-functions">skweak functions</h1>
 <p>If you haven&rsquo;t looked at the <a href="https://github.com/NorskRegnesentral/skweak">skweak repo</a> yet, it suffices to know that it provides a neat way of composing simple annotators to get a better one.
@@ -250,21 +259,21 @@ Now, skweak provides us with some very interesting classes. One is a <code>Funct
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">FunctionAnnotator</span><span class="p">:</span>
-    <span class="s2">&#34;&#34;&#34;Annotation based on a heuristic function that generates (start,end,label)
-</span><span class="s2">    given a spacy document&#34;&#34;&#34;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Doc</span><span class="p">],</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Span</span><span class="p">]]):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">find_spans</span> <span class="o">=</span> <span class="n">function</span>
-		
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc</span><span class="p">:</span> <span class="n">Doc</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Doc</span><span class="p">:</span>
-        <span class="c1"># We start by clearing all existing annotations</span>
-        <span class="n">doc</span><span class="o">.</span><span class="n">spans</span> <span class="o">=</span> <span class="p">[]</span>
-
-        <span class="k">for</span> <span class="n">position</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_spans</span><span class="p">(</span><span class="n">doc</span><span class="p">):</span>
-            <span class="n">doc</span><span class="o">.</span><span class="n">spans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Span</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">label</span><span class="p">))</span>
-
-        <span class="k">return</span> <span class="n">doc</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">FunctionAnnotator</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Annotation based on a heuristic function that generates (start,end,label)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    given a spacy document&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Doc</span><span class="p">],</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Span</span><span class="p">]]):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">find_spans</span> <span class="o">=</span> <span class="n">function</span>
+</span></span><span class="line"><span class="cl">		
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc</span><span class="p">:</span> <span class="n">Doc</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Doc</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># We start by clearing all existing annotations</span>
+</span></span><span class="line"><span class="cl">        <span class="n">doc</span><span class="o">.</span><span class="n">spans</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">position</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_spans</span><span class="p">(</span><span class="n">doc</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">doc</span><span class="o">.</span><span class="n">spans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Span</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">label</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">doc</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Let&rsquo;s see a simple labeling function we may use</p>
 <div class="highlight"><div class="chroma">
@@ -281,17 +290,17 @@ Now, skweak provides us with some very interesting classes. One is a <code>Funct
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">animal_labeling_function</span><span class="p">(</span><span class="n">doc</span><span class="p">:</span> <span class="n">Doc</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">Span</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
-    <span class="k">for</span> <span class="n">position</span><span class="p">,</span> <span class="n">token</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">tokens</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">):</span>
-            <span class="k">yield</span> <span class="n">Span</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="s1">&#39;ANIMAL&#39;</span><span class="p">)</span>
-
-<span class="n">doc</span> <span class="o">=</span> <span class="n">Doc</span><span class="p">(</span><span class="s1">&#39;this animal is some kind of antilope&#39;</span><span class="p">)</span>
-<span class="n">animal_annotator</span> <span class="o">=</span> <span class="n">FunctionAnnotator</span><span class="p">(</span><span class="n">animal_labeling_function</span><span class="p">)</span>
-<span class="n">doc</span> <span class="o">=</span> <span class="n">animal_annotator</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">spans</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">animal_labeling_function</span><span class="p">(</span><span class="n">doc</span><span class="p">:</span> <span class="n">Doc</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">Span</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">position</span><span class="p">,</span> <span class="n">token</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">tokens</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">yield</span> <span class="n">Span</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="s1">&#39;ANIMAL&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">doc</span> <span class="o">=</span> <span class="n">Doc</span><span class="p">(</span><span class="s1">&#39;this animal is some kind of antilope&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">animal_annotator</span> <span class="o">=</span> <span class="n">FunctionAnnotator</span><span class="p">(</span><span class="n">animal_labeling_function</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">doc</span> <span class="o">=</span> <span class="n">animal_annotator</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">spans</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><pre><code>[Span(position=1, label='ANIMAL'), Span(position=6, label='ANIMAL')]
 </code></pre>
@@ -319,25 +328,25 @@ We&rsquo;ll just make it force our documents to have a maximum of one label per 
 </span><span class="lnt">18
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">FunctionAnnotatorAggregator</span><span class="p">:</span>
-    <span class="s2">&#34;&#34;&#34;Base aggregator to combine all labelling sources into a single annotation layer&#34;&#34;&#34;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">annotators</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">FunctionAnnotator</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">annotators</span> <span class="o">=</span> <span class="n">annotators</span>
-    
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc</span><span class="p">:</span> <span class="n">Doc</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Doc</span><span class="p">:</span>
-        <span class="n">spans_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">annotator</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotators</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">span</span> <span class="ow">in</span> <span class="n">annotator</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span><span class="o">.</span><span class="n">spans</span><span class="p">:</span>
-                <span class="n">spans_dict</span><span class="p">[</span><span class="n">span</span><span class="o">.</span><span class="n">position</span><span class="p">]</span> <span class="o">=</span> <span class="n">span</span><span class="o">.</span><span class="n">label</span>
-        
-        
-        <span class="n">doc</span><span class="o">.</span><span class="n">spans</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">position</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">spans_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="n">doc</span><span class="o">.</span><span class="n">spans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Span</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">label</span><span class="p">))</span>
-        <span class="n">doc</span><span class="o">.</span><span class="n">spans</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-        
-        <span class="k">return</span> <span class="n">doc</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">FunctionAnnotatorAggregator</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Base aggregator to combine all labelling sources into a single annotation layer&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">annotators</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">FunctionAnnotator</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">annotators</span> <span class="o">=</span> <span class="n">annotators</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc</span><span class="p">:</span> <span class="n">Doc</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Doc</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">spans_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">annotator</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotators</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">span</span> <span class="ow">in</span> <span class="n">annotator</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span><span class="o">.</span><span class="n">spans</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">spans_dict</span><span class="p">[</span><span class="n">span</span><span class="o">.</span><span class="n">position</span><span class="p">]</span> <span class="o">=</span> <span class="n">span</span><span class="o">.</span><span class="n">label</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">doc</span><span class="o">.</span><span class="n">spans</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">position</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">spans_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">            <span class="n">doc</span><span class="o">.</span><span class="n">spans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Span</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">label</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">doc</span><span class="o">.</span><span class="n">spans</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">doc</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -353,23 +362,21 @@ We&rsquo;ll just make it force our documents to have a maximum of one label per 
 </span><span class="lnt">10
 </span><span class="lnt">11
 </span><span class="lnt">12
-</span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">verb_labeling_function</span><span class="p">(</span><span class="n">doc</span><span class="p">:</span> <span class="n">Doc</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">Span</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
-    <span class="k">for</span> <span class="n">position</span><span class="p">,</span> <span class="n">token</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">tokens</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">token</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;has&#39;</span><span class="p">]:</span>
-            <span class="k">yield</span> <span class="n">Span</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="s1">&#39;VERB&#39;</span><span class="p">)</span>
-
-<span class="n">verb_annotator</span> <span class="o">=</span> <span class="n">FunctionAnnotator</span><span class="p">(</span><span class="n">verb_labeling_function</span><span class="p">)</span>
-
-<span class="n">aggregated_annotator</span> <span class="o">=</span> <span class="n">FunctionAnnotatorAggregator</span><span class="p">([</span><span class="n">animal_annotator</span><span class="p">,</span> <span class="n">verb_annotator</span><span class="p">])</span>
-
-<span class="n">doc</span> <span class="o">=</span> <span class="n">aggregated_annotator</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">spans</span><span class="p">)</span>
-
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">verb_labeling_function</span><span class="p">(</span><span class="n">doc</span><span class="p">:</span> <span class="n">Doc</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">Span</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">position</span><span class="p">,</span> <span class="n">token</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">tokens</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">token</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;has&#39;</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">yield</span> <span class="n">Span</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="s1">&#39;VERB&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">verb_annotator</span> <span class="o">=</span> <span class="n">FunctionAnnotator</span><span class="p">(</span><span class="n">verb_labeling_function</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">aggregated_annotator</span> <span class="o">=</span> <span class="n">FunctionAnnotatorAggregator</span><span class="p">([</span><span class="n">animal_annotator</span><span class="p">,</span> <span class="n">verb_annotator</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">doc</span> <span class="o">=</span> <span class="n">aggregated_annotator</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">spans</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><pre><code>[Span(position=1, label='ANIMAL'), Span(position=2, label='VERB'), Span(position=6, label='ANIMAL')]
 </code></pre>
@@ -394,26 +401,24 @@ Now, since the aggregator is so fancy, we may wish to programatically generate s
 </span><span class="lnt">13
 </span><span class="lnt">14
 </span><span class="lnt">15
-</span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="n">heuristic_parameters</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">(</span><span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;MAMMAL&#39;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;F&#39;</span><span class="p">,</span> <span class="s1">&#39;FISH&#39;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;BIRD&#39;</span><span class="p">)</span>
-    <span class="p">]</span>
-
-<span class="n">labeling_functions</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">strats_with</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">heuristic_parameters</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">labeling_function</span><span class="p">(</span><span class="n">doc</span><span class="p">:</span> <span class="n">Doc</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">Span</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
-        <span class="k">for</span> <span class="n">position</span><span class="p">,</span> <span class="n">word</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">tokens</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">strats_with</span><span class="p">):</span>
-                <span class="k">yield</span> <span class="n">Span</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
-    <span class="n">labeling_functions</span> <span class="o">+=</span> <span class="p">[</span><span class="n">labeling_function</span><span class="p">]</span>
-
-<span class="n">strats_with</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;BOVINE&#39;</span>
-
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">heuristic_parameters</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;MAMMAL&#39;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="s1">&#39;F&#39;</span><span class="p">,</span> <span class="s1">&#39;FISH&#39;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;BIRD&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">labeling_functions</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">strats_with</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">heuristic_parameters</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">labeling_function</span><span class="p">(</span><span class="n">doc</span><span class="p">:</span> <span class="n">Doc</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">Span</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">position</span><span class="p">,</span> <span class="n">word</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">tokens</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">strats_with</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="k">yield</span> <span class="n">Span</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">labeling_functions</span> <span class="o">+=</span> <span class="p">[</span><span class="n">labeling_function</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">strats_with</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;BOVINE&#39;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><a id='problem_cell_2'></a></p>
 <div class="highlight"><div class="chroma">
@@ -429,22 +434,20 @@ Now, since the aggregator is so fancy, we may wish to programatically generate s
 </span><span class="lnt"> 9
 </span><span class="lnt">10
 </span><span class="lnt">11
-</span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="n">doc</span> <span class="o">=</span> <span class="n">Doc</span><span class="p">(</span><span class="s2">&#34;Monkeys are red. Firefish are blue; Besra is a bird and so are you&#34;</span><span class="p">)</span>
-
-<span class="c1"># we&#39;ll define this function since we&#39;ll use it a lot more below</span>
-<span class="k">def</span> <span class="nf">print_spans_from_labelers</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">labeling_functions</span><span class="p">):</span>
-    <span class="n">annotators</span> <span class="o">=</span> <span class="p">[</span><span class="n">FunctionAnnotator</span><span class="p">(</span><span class="n">labeling_function</span><span class="p">)</span> <span class="k">for</span> <span class="n">labeling_function</span> <span class="ow">in</span> <span class="n">labeling_functions</span><span class="p">]</span>
-    <span class="n">aggregated_annotator</span> <span class="o">=</span> <span class="n">FunctionAnnotatorAggregator</span><span class="p">(</span><span class="n">annotators</span><span class="p">)</span>
-
-    <span class="n">doc</span> <span class="o">=</span> <span class="n">aggregated_annotator</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">spans</span><span class="p">)</span>
-<span class="n">print_spans_from_labelers</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">labeling_functions</span><span class="p">)</span>
-
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">doc</span> <span class="o">=</span> <span class="n">Doc</span><span class="p">(</span><span class="s2">&#34;Monkeys are red. Firefish are blue; Besra is a bird and so are you&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># we&#39;ll define this function since we&#39;ll use it a lot more below</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">print_spans_from_labelers</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">labeling_functions</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">annotators</span> <span class="o">=</span> <span class="p">[</span><span class="n">FunctionAnnotator</span><span class="p">(</span><span class="n">labeling_function</span><span class="p">)</span> <span class="k">for</span> <span class="n">labeling_function</span> <span class="ow">in</span> <span class="n">labeling_functions</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">aggregated_annotator</span> <span class="o">=</span> <span class="n">FunctionAnnotatorAggregator</span><span class="p">(</span><span class="n">annotators</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">doc</span> <span class="o">=</span> <span class="n">aggregated_annotator</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">spans</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">print_spans_from_labelers</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">labeling_functions</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><pre><code>[Span(position=6, label='BOVINE')]
 </code></pre>
@@ -455,9 +458,9 @@ Now, since the aggregator is so fancy, we may wish to programatically generate s
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">for</span> <span class="n">labeling_function</span> <span class="ow">in</span> <span class="n">labeling_functions</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">labeling_function</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">for</span> <span class="n">labeling_function</span> <span class="ow">in</span> <span class="n">labeling_functions</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">labeling_function</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><pre><code>&lt;bound method LabelingCallable.labeling_function of &lt;__main__.LabelingCallable object at 0x7fa6981669a0&gt;&gt;
 &lt;bound method LabelingCallable.labeling_function of &lt;__main__.LabelingCallable object at 0x7fa698166d30&gt;&gt;
@@ -483,20 +486,20 @@ But this is not the only problem. Let&rsquo;s rewrite this with lambda functions
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="n">labeling_functions</span> <span class="o">=</span> <span class="p">[</span>
-                        <span class="k">lambda</span> <span class="n">doc</span><span class="p">:</span> 
-                            <span class="p">(</span> <span class="c1"># this is also a generator in Python; it&#39;s the same syntax as list comprehension</span>
-                            <span class="c1"># but we use round braces instead of square ones</span>
-                                <span class="n">Span</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span> 
-                                    <span class="k">for</span> <span class="n">position</span><span class="p">,</span> <span class="n">word</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">tokens</span><span class="p">)</span> 
-                                    <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">strats_with</span><span class="p">)</span>
-                            <span class="p">)</span>
-                        <span class="k">for</span> <span class="n">strats_with</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">heuristic_parameters</span>
-                    <span class="p">]</span>
-
-<span class="k">for</span> <span class="n">labeling_function</span> <span class="ow">in</span> <span class="n">labeling_functions</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">labeling_function</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">labeling_functions</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">lambda</span> <span class="n">doc</span><span class="p">:</span> 
+</span></span><span class="line"><span class="cl">                            <span class="p">(</span> <span class="c1"># this is also a generator in Python; it&#39;s the same syntax as list comprehension</span>
+</span></span><span class="line"><span class="cl">                            <span class="c1"># but we use round braces instead of square ones</span>
+</span></span><span class="line"><span class="cl">                                <span class="n">Span</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">                                    <span class="k">for</span> <span class="n">position</span><span class="p">,</span> <span class="n">word</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">tokens</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">                                    <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">strats_with</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                            <span class="p">)</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">for</span> <span class="n">strats_with</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">heuristic_parameters</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">labeling_function</span> <span class="ow">in</span> <span class="n">labeling_functions</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">labeling_function</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><pre><code>&lt;function &lt;listcomp&gt;.&lt;lambda&gt; at 0x7fa69815f160&gt;
 &lt;function &lt;listcomp&gt;.&lt;lambda&gt; at 0x7fa69815f1f0&gt;
@@ -508,8 +511,8 @@ But this is not the only problem. Let&rsquo;s rewrite this with lambda functions
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="n">print_spans_from_labelers</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">labeling_functions</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">print_spans_from_labelers</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">labeling_functions</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><pre><code>[Span(position=6, label='BIRD')]
 </code></pre>
@@ -529,16 +532,16 @@ If you come from other languages it might be strange to you, but Python doesn&rs
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">function_closure</span><span class="p">(</span><span class="n">strats_with</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
-    <span class="n">local_strats_with</span><span class="p">,</span> <span class="n">local_label</span> <span class="o">=</span> <span class="n">strats_with</span><span class="p">,</span> <span class="n">label</span>
-    <span class="k">def</span> <span class="nf">labeling_function</span><span class="p">(</span><span class="n">doc</span><span class="p">:</span> <span class="n">Doc</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">Span</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
-        <span class="k">for</span> <span class="n">position</span><span class="p">,</span> <span class="n">word</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">tokens</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">local_strats_with</span><span class="p">):</span>
-                <span class="k">yield</span> <span class="n">Span</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">local_label</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">labeling_function</span>
-
-<span class="n">labeling_functions</span> <span class="o">=</span> <span class="p">[</span><span class="n">function_closure</span><span class="p">(</span><span class="n">strats_with</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span> <span class="k">for</span> <span class="n">strats_with</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">heuristic_parameters</span><span class="p">]</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">function_closure</span><span class="p">(</span><span class="n">strats_with</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">local_strats_with</span><span class="p">,</span> <span class="n">local_label</span> <span class="o">=</span> <span class="n">strats_with</span><span class="p">,</span> <span class="n">label</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">labeling_function</span><span class="p">(</span><span class="n">doc</span><span class="p">:</span> <span class="n">Doc</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">Span</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">position</span><span class="p">,</span> <span class="n">word</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">tokens</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">local_strats_with</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="k">yield</span> <span class="n">Span</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">local_label</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">labeling_function</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">labeling_functions</span> <span class="o">=</span> <span class="p">[</span><span class="n">function_closure</span><span class="p">(</span><span class="n">strats_with</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span> <span class="k">for</span> <span class="n">strats_with</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">heuristic_parameters</span><span class="p">]</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Now, when we get the annotators things go as expected.</p>
 <div class="highlight"><div class="chroma">
@@ -546,8 +549,8 @@ If you come from other languages it might be strange to you, but Python doesn&rs
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="n">print_spans_from_labelers</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">labeling_functions</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">print_spans_from_labelers</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">labeling_functions</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><pre><code>[Span(position=0, label='MAMMAL'), Span(position=3, label='FISH'), Span(position=6, label='BIRD')]
 </code></pre>
@@ -561,9 +564,9 @@ If you come from other languages it might be strange to you, but Python doesn&rs
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">labeling_functions</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">labeling_functions</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">labeling_functions</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">labeling_functions</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><pre><code>&lt;function function_closure.&lt;locals&gt;.labeling_function at 0x7fa698152ca0&gt;
 &lt;class 'function'&gt;
@@ -582,16 +585,16 @@ If you come from other languages it might be strange to you, but Python doesn&rs
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">function_closure</span><span class="p">(</span><span class="n">strats_with</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">labeling_function</span><span class="p">(</span><span class="n">doc</span><span class="p">:</span> <span class="n">Doc</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">Span</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
-        <span class="k">for</span> <span class="n">position</span><span class="p">,</span> <span class="n">word</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">tokens</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">strats_with</span><span class="p">):</span>
-                <span class="k">yield</span> <span class="n">Span</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">labeling_function</span>
-
-<span class="n">labeling_functions</span> <span class="o">=</span> <span class="p">[</span><span class="n">function_closure</span><span class="p">(</span><span class="n">strats_with</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span> <span class="k">for</span> <span class="n">strats_with</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">heuristic_parameters</span><span class="p">]</span>
-<span class="n">print_spans_from_labelers</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">labeling_functions</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">function_closure</span><span class="p">(</span><span class="n">strats_with</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">labeling_function</span><span class="p">(</span><span class="n">doc</span><span class="p">:</span> <span class="n">Doc</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">Span</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">position</span><span class="p">,</span> <span class="n">word</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">tokens</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">strats_with</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="k">yield</span> <span class="n">Span</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">labeling_function</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">labeling_functions</span> <span class="o">=</span> <span class="p">[</span><span class="n">function_closure</span><span class="p">(</span><span class="n">strats_with</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span> <span class="k">for</span> <span class="n">strats_with</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">heuristic_parameters</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">print_spans_from_labelers</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">labeling_functions</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><pre><code>[Span(position=0, label='MAMMAL'), Span(position=3, label='FISH'), Span(position=6, label='BIRD')]
 </code></pre>
@@ -612,19 +615,19 @@ If you come from other languages it might be strange to you, but Python doesn&rs
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">LabelingCallable</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">starts_with</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">starts_with</span> <span class="o">=</span> <span class="n">starts_with</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">label</span>
-
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">Span</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
-        <span class="k">for</span> <span class="n">position</span><span class="p">,</span> <span class="n">word</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">tokens</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">starts_with</span><span class="p">):</span>
-                <span class="k">yield</span> <span class="n">Span</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
-
-<span class="n">labeling_functions</span> <span class="o">=</span> <span class="p">[</span><span class="n">LabelingCallable</span><span class="p">(</span><span class="n">strats_with</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span> <span class="k">for</span> <span class="n">strats_with</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">heuristic_parameters</span><span class="p">]</span>
-<span class="n">print_spans_from_labelers</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">labeling_functions</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">LabelingCallable</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">starts_with</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">starts_with</span> <span class="o">=</span> <span class="n">starts_with</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">label</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">Span</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">position</span><span class="p">,</span> <span class="n">word</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">tokens</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">starts_with</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="k">yield</span> <span class="n">Span</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">labeling_functions</span> <span class="o">=</span> <span class="p">[</span><span class="n">LabelingCallable</span><span class="p">(</span><span class="n">strats_with</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span> <span class="k">for</span> <span class="n">strats_with</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">heuristic_parameters</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">print_spans_from_labelers</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">labeling_functions</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><pre><code>[Span(position=0, label='MAMMAL'), Span(position=3, label='FISH'), Span(position=6, label='BIRD')]
 </code></pre>
@@ -648,21 +651,21 @@ If you come from other languages it might be strange to you, but Python doesn&rs
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">LabelingCallable</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">starts_with</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">starts_with</span> <span class="o">=</span> <span class="n">starts_with</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">label</span>
-
-    <span class="k">def</span> <span class="nf">labeling_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">Span</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
-        <span class="k">for</span> <span class="n">position</span><span class="p">,</span> <span class="n">word</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">tokens</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">starts_with</span><span class="p">):</span>
-                <span class="k">yield</span> <span class="n">Span</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
-
-<span class="n">labeling_functions</span> <span class="o">=</span> <span class="p">[</span><span class="n">LabelingCallable</span><span class="p">(</span><span class="n">strats_with</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span><span class="o">.</span><span class="n">labeling_function</span> <span class="k">for</span> <span class="n">strats_with</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">heuristic_parameters</span><span class="p">]</span>
-<span class="n">print_spans_from_labelers</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">labeling_functions</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">labeling_functions</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">labeling_functions</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">LabelingCallable</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">starts_with</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">starts_with</span> <span class="o">=</span> <span class="n">starts_with</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">label</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">labeling_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">Span</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">position</span><span class="p">,</span> <span class="n">word</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">tokens</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">starts_with</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="k">yield</span> <span class="n">Span</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">labeling_functions</span> <span class="o">=</span> <span class="p">[</span><span class="n">LabelingCallable</span><span class="p">(</span><span class="n">strats_with</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span><span class="o">.</span><span class="n">labeling_function</span> <span class="k">for</span> <span class="n">strats_with</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">heuristic_parameters</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">print_spans_from_labelers</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">labeling_functions</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">labeling_functions</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">labeling_functions</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><pre><code>[Span(position=0, label='MAMMAL'), Span(position=3, label='FISH'), Span(position=6, label='BIRD')]
 &lt;bound method LabelingCallable.labeling_function of &lt;__main__.LabelingCallable object at 0x7fa6981669a0&gt;&gt;
@@ -769,7 +772,7 @@ We saw one usecase in which they can be helpful and are better suited than class
 
 
 
-<script type="text/javascript" src="/blog/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+<script type="text/javascript" src="/blog/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
 
 
 <script type="application/javascript">

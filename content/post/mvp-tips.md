@@ -6,7 +6,7 @@ draft: false
 
 # Some context
 I had a visualisation app I built for exploring if our aspect based sentimet analysis (ABSA) pipeline. The image below explains both what ABSA is and what the app did.
-![ABSA image](/absa-example.png)
+![ABSA image](/blog/absa-example.png)
 
 Some people (backend people) in my company needed to explore text messages to see what problems users complain about and how many messages they write about each problem. So I took the visualisation app and the ABSA pipeline and just ran it on the new dataset. People were very hapy with this solution.
 
