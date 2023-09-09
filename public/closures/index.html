@@ -14,69 +14,70 @@
   
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Friendly Python Clojures in an automatic Text Annotator - Bogdan&#39;s Technical Blog</title>
+  <title>Closures and Partial Function Application in Python: A NLP Use Case - Bogdan&#39;s Technical Blog</title>
   <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, maximum-scale=1"
+/>
 
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 
 <meta name="theme-color" content="#f8f5ec" />
-<meta name="msapplication-navbutton-color" content="#f8f5ec">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec" />
 
 
-<meta name="author" content="Bogdan" /><meta name="description" content="While creating some pipelines for automatic text annotation, I encountered a bug that made me realise that I didn&amp;rsquo;t really get the gist of a basic block of programming.
-It&amp;rsquo;s closures. They&amp;rsquo;re there thanks to your language having first-class functions and you may have encountered them in academia or some programming tutorial, even used them in some toy examples. I know I had. Closures in a sandbox are straight forward. Still, you may not know their power until you&amp;rsquo;d seen them in the wild." /><meta name="keywords" content="machine learning, Python" />
+<meta
+  name="author"
+  content="Bogdan"
+/><meta name="description" content="While creating some pipelines for automatic text annotation, I encountered a bug that made me realize I didn&amp;rsquo;t fully understand how closures work in Python. It&amp;rsquo;s important to note that in Python, a for-loop does not create a new scope or its own context, which can affect how closures behave.
+" /><meta
+  name="keywords"
+  content="machine learning, Python"
+/>
 
 
+ 
 
 
-
-
-<meta name="generator" content="Hugo 0.101.0 with theme even" />
+<meta
+  name="generator"
+  content="Hugo 0.118.2 with theme even"
+/>
 
 
 <link rel="canonical" href="http://ouatu.ro/blog/closures/" />
-<link rel="apple-touch-icon" sizes="180x180" href="/blog/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/blog/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/blog/favicon-16x16.png">
-<link rel="manifest" href="/blog/manifest.json">
-<link rel="mask-icon" href="/blog/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="apple-touch-icon" sizes="180x180" href="/blog/apple-touch-icon.png"> <link rel="icon" type="image/png" sizes="32x32" href="/blog/favicon-32x32.png"> <link rel="icon" type="image/png"
+sizes="16x16" href="/blog/favicon-16x16.png"> <link rel="manifest"
+href="/blog/manifest.json"> <link rel="mask-icon" href="/blog/safari-pinned-tab.svg" color="#5bbad5">
 
 
 
-<link href="/blog/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link href="/blog/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
-
-
-<meta property="og:title" content="Friendly Python Clojures in an automatic Text Annotator" />
-<meta property="og:description" content="While creating some pipelines for automatic text annotation, I encountered a bug that made me realise that I didn&rsquo;t really get the gist of a basic block of programming.
-It&rsquo;s closures. They&rsquo;re there thanks to your language having first-class functions and you may have encountered them in academia or some programming tutorial, even used them in some toy examples. I know I had. Closures in a sandbox are straight forward. Still, you may not know their power until you&rsquo;d seen them in the wild." />
+ <meta property="og:title" content="Closures and Partial Function Application in Python: A NLP Use Case" />
+<meta property="og:description" content="While creating some pipelines for automatic text annotation, I encountered a bug that made me realize I didn&rsquo;t fully understand how closures work in Python. It&rsquo;s important to note that in Python, a for-loop does not create a new scope or its own context, which can affect how closures behave." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://ouatu.ro/blog/closures/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2021-11-06T02:53:16+02:00" />
 <meta property="article:modified_time" content="2021-11-06T02:53:16+02:00" />
-
-<meta itemprop="name" content="Friendly Python Clojures in an automatic Text Annotator">
-<meta itemprop="description" content="While creating some pipelines for automatic text annotation, I encountered a bug that made me realise that I didn&rsquo;t really get the gist of a basic block of programming.
-It&rsquo;s closures. They&rsquo;re there thanks to your language having first-class functions and you may have encountered them in academia or some programming tutorial, even used them in some toy examples. I know I had. Closures in a sandbox are straight forward. Still, you may not know their power until you&rsquo;d seen them in the wild."><meta itemprop="datePublished" content="2021-11-06T02:53:16+02:00" />
+<meta itemprop="name" content="Closures and Partial Function Application in Python: A NLP Use Case">
+<meta itemprop="description" content="While creating some pipelines for automatic text annotation, I encountered a bug that made me realize I didn&rsquo;t fully understand how closures work in Python. It&rsquo;s important to note that in Python, a for-loop does not create a new scope or its own context, which can affect how closures behave."><meta itemprop="datePublished" content="2021-11-06T02:53:16+02:00" />
 <meta itemprop="dateModified" content="2021-11-06T02:53:16+02:00" />
-<meta itemprop="wordCount" content="1776">
+<meta itemprop="wordCount" content="2120">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Friendly Python Clojures in an automatic Text Annotator"/>
-<meta name="twitter:description" content="While creating some pipelines for automatic text annotation, I encountered a bug that made me realise that I didn&rsquo;t really get the gist of a basic block of programming.
-It&rsquo;s closures. They&rsquo;re there thanks to your language having first-class functions and you may have encountered them in academia or some programming tutorial, even used them in some toy examples. I know I had. Closures in a sandbox are straight forward. Still, you may not know their power until you&rsquo;d seen them in the wild."/>
+<meta name="twitter:title" content="Closures and Partial Function Application in Python: A NLP Use Case"/>
+<meta name="twitter:description" content="While creating some pipelines for automatic text annotation, I encountered a bug that made me realize I didn&rsquo;t fully understand how closures work in Python. It&rsquo;s important to note that in Python, a for-loop does not create a new scope or its own context, which can affect how closures behave."/>
 
 <!--[if lte IE 9]>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
-<![endif]-->
-
-<!--[if lt IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script> <!
+[endif]--> <!--[if lt IE 9]>
   <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
-<![endif]-->
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script> <!
+[endif]-->
 
 </head>
 <body>
@@ -140,7 +141,7 @@ It&rsquo;s closures. They&rsquo;re there thanks to your language having first-cl
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">Friendly Python Clojures in an automatic Text Annotator</h1>
+      <h1 class="post-title">Closures and Partial Function Application in Python: A NLP Use Case</h1>
 
       <div class="post-meta">
         <span class="post-time"> 2021-11-06 </span>
@@ -156,21 +157,63 @@ It&rsquo;s closures. They&rsquo;re there thanks to your language having first-cl
   <ul>
     <li>
       <ul>
+        <li><a href="#what-are-closures">What Are Closures?</a></li>
         <li><a href="#spacy-objects">SpaCy objects</a></li>
       </ul>
     </li>
     <li><a href="#skweak-functions">skweak functions</a></li>
     <li><a href="#the-problem">The problem</a></li>
-    <li><a href="#ending-notes">Ending notes</a></li>
+    <li><a href="#partial-function-application">Partial function application</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
   </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      <p>While creating some pipelines for automatic text annotation, I encountered a bug that made me realise that I didn&rsquo;t really get the gist of a basic block of programming.</p>
-<p>It&rsquo;s closures. They&rsquo;re there thanks to your language having first-class functions and you may have encountered them in academia or some programming tutorial, even used them in some toy examples. I know I had. Closures in a sandbox are straight forward. Still, you may not know their power until you&rsquo;d seen them in the wild.</p>
-<p>In Python at least, you won&rsquo;t need to know closures to solve most simple business problems. But once a more sofisticated system is in place and you won&rsquo;t want to change parts of the system (in many chases it&rsquo;s not practical due to the parts being held in out-of-your-control packages), sometimes a closure comes in handy for providig data encapsulation, feels idiomatic and will reduce the mental overload you&rsquo;d have to deal with when using a more complex structure, such as a class.</p>
-<p>Still here? Then I&rsquo;ll reconstruct some <a href="https://spacy.io/">SpaCy</a> and <a href="https://github.com/NorskRegnesentral/skweak">skweak</a> functionalities for you so you&rsquo;ll better understant when to use these closures.</p>
+      <p>While creating some pipelines for automatic text annotation, I encountered a bug that made me realize I didn&rsquo;t fully understand how closures work in Python. It&rsquo;s important to note that in Python, a for-loop does not create a new scope or its own context, which can affect how closures behave.</p>
+<p>When you&rsquo;re working with multiple packages in Python, you&rsquo;re essentially dealing with a complex ecosystem of code. You might often find that modifying components—be they functions, classes, or modules—is either impractical or impossible. This is especially true when those components are part of packages that are not under your control. Here&rsquo;s where closures can provide value:</p>
+<ol>
+<li>
+<p><strong>Data Encapsulation</strong>: Closures can enclose state—variables from the outer function that the inner function relies on. This encapsulation can effectively isolate this pocket of state, minimizing the risk of unintended side-effects when integrating with external packages.</p>
+</li>
+<li>
+<p><strong>Idiomatic Code</strong>: Pythonic idioms encourage readability and simplicity. Using closures can be a more Pythonic way to achieve specific kinds of encapsulation and state management without resorting to creating full-blown classes.</p>
+</li>
+<li>
+<p><strong>Reduced Mental Overhead</strong>: When you&rsquo;re wrestling with a complex system, every bit of simplification helps. Closures can help you encapsulate specific behaviors and states into individual, manageable units without requiring you to understand or modify the complete architecture of an external package.</p>
+</li>
+</ol>
+<p>By focusing on these benefits, closures can sometimes serve as a more straightforward, clean alternative to complex inheritance hierarchies or class compositions when dealing with multiple external packages.</p>
+<p>In this article, I&rsquo;ll demonstrate the concept reconstructing functionalities from <a href="https://spacy.io/">SpaCy</a> and <a href="https://github.com/NorskRegnesentral/skweak">skweak</a>. By the end, you should have a solid grasp of when and why to use closures, particularly in the context of Natural Language Processing (NLP).</p>
+<h2 id="what-are-closures">What Are Closures?</h2>
+<p>Before we dive into the problem I encountered, let&rsquo;s briefly talk about what closures are. A closure in Python is a function object that has access to variables in its local scope even after the function has finished execution. This allows for data to be hidden from the global scope, making it possible to encapsulate logic and state within a function.</p>
+<p>Here&rsquo;s a simple example:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">outer_function</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">inner_function</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">inner_function</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">x</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span>  <span class="c1"># this won&#39;t be seen by the inner_function, since it already sees the x from outer_function</span>
+</span></span><span class="line"><span class="cl"><span class="n">add_five</span> <span class="o">=</span> <span class="n">outer_function</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">result</span> <span class="o">=</span> <span class="n">add_five</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>  <span class="c1"># Output will be 8</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>8
+</code></pre>
 <h2 id="spacy-objects">SpaCy objects</h2>
 <p><a href="https://spacy.io/">SpaCy</a> is here for you to help you build easy NLP pypelines.
 Central to this package are the <code>Doc</code> objects (short for document). It&rsquo;s a neatly way to pack data for NLP and if it doesn&rsquo;t provide what you need out of the box, you can <a href="https://spacy.io/usage/processing-pipelines#custom-components-attributes">always extend it&rsquo;s functionalities</a> to match your usecase.</p>
@@ -202,7 +245,7 @@ Central to this package are the <code>Doc</code> objects (short for document). I
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span><span class="p">[</span><span class="n">position</span><span class="p">]</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>By implementing <code>__len__</code> and <code>__getitem__</code> <a href="https://www.geeksforgeeks.org/dunder-magic-methods-python/">double-under functions</a> we got the ability to iterate through the Doc&rsquo;s tokens with a simple for as below. This is thanks to the Python datamodel. It&rsquo;s outside the scope of this post, but learning to leverage the datamodel will pay dividends on your effectiveness in Python. The first chapter of <a href="https://learning.oreilly.com/library/view/fluent-python/9781491946237/">Fluent Python</a> introduces it in the first chapter in a very neat way. If you like video format more, <a href="https://www.youtube.com/watch?v=AmHE0kZhLIQ">James Powell</a> got you covered.</p>
+</div><p>By implementing <code>__len__</code> and <code>__getitem__</code> <a href="https://www.geeksforgeeks.org/dunder-magic-methods-python/">double-under functions</a> we got the ability to iterate through the Doc&rsquo;s tokens with a simple for as below. This is thanks to the Python datamodel. It&rsquo;s outside the scope of this post, but learning to leverage the datamodel will pay dividends on your effectiveness in Python. <a href="https://learning.oreilly.com/library/view/fluent-python/9781491946237/">Fluent Python</a> introduces it in the first chapter in a very neat way. If you like video format more, <a href="https://www.youtube.com/watch?v=AmHE0kZhLIQ">James Powell</a> got you covered.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -255,13 +298,9 @@ Now, skweak provides us with some very interesting classes. One is a <code>Funct
 </span><span class="lnt">10
 </span><span class="lnt">11
 </span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">FunctionAnnotator</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Annotation based on a heuristic function that generates (start,end,label)
-</span></span></span><span class="line"><span class="cl"><span class="s2">    given a spacy document&#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Doc</span><span class="p">],</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Span</span><span class="p">]]):</span>
 </span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">find_spans</span> <span class="o">=</span> <span class="n">function</span>
 </span></span><span class="line"><span class="cl">		
@@ -381,8 +420,8 @@ We&rsquo;ll just make it force our documents to have a maximum of one label per 
 </div><pre><code>[Span(position=1, label='ANIMAL'), Span(position=2, label='VERB'), Span(position=6, label='ANIMAL')]
 </code></pre>
 <h1 id="the-problem">The problem</h1>
-<p>All nice and dandy, the packages are well implemented and work as expected!
-Now, since the aggregator is so fancy, we may wish to programatically generate some labeling functions from a list of excellent heuristic parameters
+<p>The packages are well implemented and work as expected!
+Now, we may wish to programatically generate some labeling functions from a list of excellent heuristic parameters
 <a id='problem_cell'></a></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -462,12 +501,12 @@ Now, since the aggregator is so fancy, we may wish to programatically generate s
 </span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">labeling_function</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><pre><code>&lt;bound method LabelingCallable.labeling_function of &lt;__main__.LabelingCallable object at 0x7fa6981669a0&gt;&gt;
-&lt;bound method LabelingCallable.labeling_function of &lt;__main__.LabelingCallable object at 0x7fa698166d30&gt;&gt;
-&lt;bound method LabelingCallable.labeling_function of &lt;__main__.LabelingCallable object at 0x7fa698166940&gt;&gt;
+</div><pre><code>&lt;function labeling_function at 0x10372e200&gt;
+&lt;function labeling_function at 0x10372f1c0&gt;
+&lt;function labeling_function at 0x10372f250&gt;
 </code></pre>
-<p>They point to the same memory address. This is because Python redefines functions in place.
-But this is not the only problem. Let&rsquo;s rewrite this with lambda functions.</p>
+<p>They point to different memory addresses.
+Let&rsquo;s rewrite this with lambda functions.</p>
 <p><em>Note</em> if you haven&rsquo;t worked with list comprehensions before: don&rsquo;t worry about it; think of the code below as a way to create a new function without replacing the existing function with the same name</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -501,9 +540,9 @@ But this is not the only problem. Let&rsquo;s rewrite this with lambda functions
 </span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">labeling_function</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><pre><code>&lt;function &lt;listcomp&gt;.&lt;lambda&gt; at 0x7fa69815f160&gt;
-&lt;function &lt;listcomp&gt;.&lt;lambda&gt; at 0x7fa69815f1f0&gt;
-&lt;function &lt;listcomp&gt;.&lt;lambda&gt; at 0x7fa69815f280&gt;
+</div><pre><code>&lt;function &lt;listcomp&gt;.&lt;lambda&gt; at 0x10372dc60&gt;
+&lt;function &lt;listcomp&gt;.&lt;lambda&gt; at 0x10372f490&gt;
+&lt;function &lt;listcomp&gt;.&lt;lambda&gt; at 0x10372f5b0&gt;
 </code></pre>
 <p>But when we want to print the function the problem stays.</p>
 <div class="highlight"><div class="chroma">
@@ -517,7 +556,7 @@ But this is not the only problem. Let&rsquo;s rewrite this with lambda functions
 </div><pre><code>[Span(position=6, label='BIRD')]
 </code></pre>
 <p>This is because of scoping. The problem is that, since we didn&rsquo;t declare strats_with, label in the lambda body or parameters, the lambdas will always look in the scope immediately outside them and they will find the last values that <code>strats_with</code>, <code>label</code> had.
-If you come from other languages it might be strange to you, but Python doesn&rsquo;t create a new scope for the <code>for</code> body. Instead it uses the same local scope. This is why <code>strats_with, label = 'B', 'BOVINE'</code> in snippet <a href="#problem_cell">8</a> produced snippet <a href="#problem_cell_2">9</a> to display the label as &lsquo;BOVINE&rsquo;</p>
+If you come from other languages it might be strange to you, but Python doesn&rsquo;t create a new scope or context inside the <code>for</code> body. Instead it uses the same local scope. This is why <code>strats_with, label = 'B', 'BOVINE'</code> in snippet <a href="#problem_cell">8</a> produced snippet <a href="#problem_cell_2">9</a> to display the label as &lsquo;BOVINE&rsquo;</p>
 <p>But be not affraid! There is a solution:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -568,7 +607,7 @@ If you come from other languages it might be strange to you, but Python doesn&rs
 </span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">labeling_functions</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><pre><code>&lt;function function_closure.&lt;locals&gt;.labeling_function at 0x7fa698152ca0&gt;
+</div><pre><code>&lt;function function_closure.&lt;locals&gt;.labeling_function at 0x10372f640&gt;
 &lt;class 'function'&gt;
 </code></pre>
 <p>One improvement we can make is not using <code>local_strats_with</code>, <code>local_label</code>, since parameters are themselves local variables</p>
@@ -598,6 +637,44 @@ If you come from other languages it might be strange to you, but Python doesn&rs
 </div>
 </div><pre><code>[Span(position=0, label='MAMMAL'), Span(position=3, label='FISH'), Span(position=6, label='BIRD')]
 </code></pre>
+<h1 id="partial-function-application">Partial function application</h1>
+<p>Yet another way to do things, partial application is a concept where you fix a few arguments of a function and generate a new function:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">labeling_function</span><span class="p">(</span><span class="n">starts_with</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">doc</span><span class="p">:</span> <span class="n">Doc</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">Span</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">position</span><span class="p">,</span> <span class="n">word</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">tokens</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">starts_with</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">yield</span> <span class="n">Span</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Using partial to fix the first two arguments starts_with and label</span>
+</span></span><span class="line"><span class="cl"><span class="n">labeling_functions</span> <span class="o">=</span> <span class="p">[</span><span class="n">partial</span><span class="p">(</span><span class="n">labeling_function</span><span class="p">,</span> <span class="n">starts_with</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span> <span class="k">for</span> <span class="n">starts_with</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">heuristic_parameters</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Verify if the partial application works as intended</span>
+</span></span><span class="line"><span class="cl"><span class="n">print_spans_from_labelers</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">labeling_functions</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>[Span(position=0, label='MAMMAL'), Span(position=3, label='FISH'), Span(position=6, label='BIRD')]
+</code></pre>
+<p>Explanation:</p>
+<p><code>labeling_function</code> is now a single function that accepts three parameters.</p>
+<p>We use <code>functools.partial</code> to &ldquo;lock in&rdquo; the first two parameters, <code>starts_with</code> and <code>label</code>.</p>
+<p>This generates a new function for each pair of <code>starts_with</code> and <code>label</code>, which we then add to <code>labeling_functions</code>.</p>
 <p>Now compare it with how you&rsquo;d implement a regular class:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -631,7 +708,7 @@ If you come from other languages it might be strange to you, but Python doesn&rs
 </div>
 </div><pre><code>[Span(position=0, label='MAMMAL'), Span(position=3, label='FISH'), Span(position=6, label='BIRD')]
 </code></pre>
-<p>The object is used only because it can function as a regular function - something that a regular function is more fit to do. This also requires you to come up with a naming convention for this kind of classes. And it doesn&rsquo;t fit with the fact that <code>skweak</code> expects a function (as the code and docstrings imply), even if it masquerades as one.</p>
+<p>The object is used only because it can function as a regular function - something that an actual regular function is more fit to do. This also requires you to come up with a naming convention for this kind of classes. And it doesn&rsquo;t fit with the fact that <code>skweak</code> expects a function (as the code and docstrings imply), even if it masquerades as one.</p>
 <p>You can also do something like this:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -668,15 +745,14 @@ If you come from other languages it might be strange to you, but Python doesn&rs
 </span></span></code></pre></td></tr></table>
 </div>
 </div><pre><code>[Span(position=0, label='MAMMAL'), Span(position=3, label='FISH'), Span(position=6, label='BIRD')]
-&lt;bound method LabelingCallable.labeling_function of &lt;__main__.LabelingCallable object at 0x7fa6981669a0&gt;&gt;
+&lt;bound method LabelingCallable.labeling_function of &lt;__main__.LabelingCallable object at 0x1037524a0&gt;&gt;
 &lt;class 'method'&gt;
 </code></pre>
 <p>Maybe this is something you&rsquo;ll eventually want but, for our intended purposes, this is basically a closure with extra steps.</p>
-<h1 id="ending-notes">Ending notes</h1>
-<p>In this post we explored closures, a solution for providing data locality.
-We saw one usecase in which they can be helpful and are better suited than classes.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>In this post we explored closures, a solution for providing data locality.</p>
+<p>As we&rsquo;ve seen, Python closures and partial function application are powerful features for encapsulating local state. These techniques can be especially useful in NLP pipelines, allowing us to write clean, modular code. Whether you are working on a simple task or something complex like automated text annotation, understanding these language features can significantly improve your code quality and maintainability.</p>
 <p>If this is the kind of content you enjoy, let me know!</p>
-
     </div>
 
     <div class="post-copyright">
@@ -699,7 +775,7 @@ We saw one usecase in which they can be helpful and are better suited than class
       <nav class="post-nav">
         <a class="prev" href="/blog/mvp-tips/">
             <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">MVP Tips</span>
+            <span class="prev-text nav-default">MVP Tips for Analytics Tools</span>
             <span class="prev-text nav-mobile">Prev</span>
           </a>
         <a class="next" href="/blog/hello-world/">
@@ -755,7 +831,7 @@ We saw one usecase in which they can be helpful and are better suited than class
   <span class="copyright-year">
     &copy; 
     2017 - 
-    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>Bogdan</span>
+    2023<span class="heart"><i class="iconfont icon-heart"></i></span><span>Bogdan</span>
   </span>
 </div>
 

@@ -1,35 +1,40 @@
 ---
-title: "MVP Tips"
-date: 2022-03-28T00:29:54+03:00
-draft: false
+Title: MVP Tips for Analytics Tools
+Date: 2022-03-28T00:29:54+03:00
+Draft: false
+Summary: "Explore the lessons learned from developing a visualization app that assisted different teams in my company with aspect-based sentiment analysis (ABSA)."
 ---
 
-# Some context
-I had a visualisation app I built for exploring if our aspect based sentimet analysis (ABSA) pipeline. The image below explains both what ABSA is and what the app did.
-![ABSA image](/blog/absa-example.png)
+# Introduction
 
-Some people (backend people) in my company needed to explore text messages to see what problems users complain about and how many messages they write about each problem. So I took the visualisation app and the ABSA pipeline and just ran it on the new dataset. People were very hapy with this solution.
+Navigating the challenges of creating a user-friendly, effective analytics tool can be daunting. This post will share real-world experiences from developing a visualization app used for aspect-based sentiment analysis (ABSA). We'll dive into how it benefited backend and UX teams differently and offer some crucial takeaways for anyone involved in analytics tool development.
 
-Another set of people (UX people) wanted the exact same thing, so I followed the exact same steps.
-This time I said that I'll first sit with them to see how they use the app. I sit down with them one by one and let them navigate the app. One after another tried to click on visualisations to no prevail, struggled with what a named entity or a random sample is, ignored full pages because there were no visualisations by default.
+![ABSA Workflow](/blog/absa-example.png)
 
-# What I\'ve learned
+## The Backstory: Meeting Different Needs with One App
 
-Don't give users the responsibility of finding the optimal way to solve their problem under the pretext of flexibility (they literally told me this). Put it another way, be opinionated.
+Initially, I created a visualization app to explore our ABSA pipeline. It quickly gained traction among the backend team who needed to explore text messages for customer complaints. Upon applying the ABSA pipeline to a new dataset, the team found the tool extremely useful.
 
-Don’t try to solve more than one problem. Put it another way, be opinionated.
+### UX Team: A Different Story
 
-Get fast feedback on your opinionated design and iterate. Best way is to find a possible user, give them the app link and observe what they do.
+On the flip side, the UX team had a more challenging experience. Despite having similar needs, they struggled with aspects like understanding named entities and random samples. When sitting down with them for user testing, I realized they often ignored full pages because there were no visualisations by default on the page.
 
-Try to record or take notes on the user interview.
+# What I've Learned
 
-When iterating, you’ll see that you’ll probably delete code and become even more opinionated.
+- **Be Opinionated in Design**: Don't overload your users with choices. Make intelligent decisions on their behalf to guide them toward solving their problems effectively.
 
-Reuse code and you’ll see that an even simpler solution would have done a better job (even for the problem the reused code comes from).
+- **Focus on Solving One Problem**: By trying to tackle multiple issues, you risk diluting the tool's effectiveness. Stick to solving one problem well.
 
+- **Get Fast Feedback**: Rapid feedback cycles are essential. Observe users in action, record or take notes during these user interviews, and iterate your design based on this feedback.
 
+- **Simplify and Reuse Code**: Iteration often leads to deleting code. You'll find that a simpler solution can often do a better job, even for the original problem the code was solving.
 
-# Particular for analytics tools
-- be sure that it’s clear what controls are associated with what view.
-- always offer a preview of what the data will be like or some cues that visualisations will be displayed if they do something with your buttons and sliders; otherwise users won't even try to operate your sliders since they assume there is nothing interesting to be seen there.
-- don't underestimate the power of a good data grid
+# Particular for Analytics Tools
+
+- **Be Clear About Controls and Views**: Ensure that it's clear which controls are associated with what view.
+- **Always Offer a Preview**: Offer a preview or some cues that visualizations will be displayed when users interact with your controls like buttons and sliders. Otherwise, users might not even attempt to use them.
+- **Don't Underestimate a Good Data Grid**: A well-designed data grid can be a powerful tool for data analysis, so don't underestimate its impact.
+
+# Conclusion
+
+Creating an analytics tool that satisfies all types of users is challenging. The key is to be opinionated in your design choices, focus on solving one core problem, and continually seek user feedback for iterative improvement. Following these principles won't just make your tool more effective; it'll make it indispensable.

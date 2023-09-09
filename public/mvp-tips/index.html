@@ -14,65 +14,69 @@
   
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>MVP Tips - Bogdan&#39;s Technical Blog</title>
+  <title>MVP Tips for Analytics Tools - Bogdan&#39;s Technical Blog</title>
   <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, maximum-scale=1"
+/>
 
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 
 <meta name="theme-color" content="#f8f5ec" />
-<meta name="msapplication-navbutton-color" content="#f8f5ec">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec" />
 
 
-<meta name="author" content="Bogdan" /><meta name="description" content="Some context I had a visualisation app I built for exploring if our aspect based sentimet analysis (ABSA) pipeline. The image below explains both what ABSA is and what the app did. Some people (backend people) in my company needed to explore text messages to see what problems users complain about and how many messages they write about each problem. So I took the visualisation app and the ABSA pipeline and just ran it on the new dataset." /><meta name="keywords" content="machine learning, Python" />
+<meta
+  name="author"
+  content="Bogdan"
+/><meta name="description" content="Explore the lessons learned from developing a visualization app that assisted different teams in my company with aspect-based sentiment analysis (ABSA)." /><meta
+  name="keywords"
+  content="machine learning, Python"
+/>
 
 
+ 
 
 
-
-
-<meta name="generator" content="Hugo 0.101.0 with theme even" />
+<meta
+  name="generator"
+  content="Hugo 0.118.2 with theme even"
+/>
 
 
 <link rel="canonical" href="http://ouatu.ro/blog/mvp-tips/" />
-<link rel="apple-touch-icon" sizes="180x180" href="/blog/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/blog/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/blog/favicon-16x16.png">
-<link rel="manifest" href="/blog/manifest.json">
-<link rel="mask-icon" href="/blog/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="apple-touch-icon" sizes="180x180" href="/blog/apple-touch-icon.png"> <link rel="icon" type="image/png" sizes="32x32" href="/blog/favicon-32x32.png"> <link rel="icon" type="image/png"
+sizes="16x16" href="/blog/favicon-16x16.png"> <link rel="manifest"
+href="/blog/manifest.json"> <link rel="mask-icon" href="/blog/safari-pinned-tab.svg" color="#5bbad5">
 
 
 
-<link href="/blog/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link href="/blog/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
-
-
-<meta property="og:title" content="MVP Tips" />
-<meta property="og:description" content="Some context I had a visualisation app I built for exploring if our aspect based sentimet analysis (ABSA) pipeline. The image below explains both what ABSA is and what the app did. Some people (backend people) in my company needed to explore text messages to see what problems users complain about and how many messages they write about each problem. So I took the visualisation app and the ABSA pipeline and just ran it on the new dataset." />
+ <meta property="og:title" content="MVP Tips for Analytics Tools" />
+<meta property="og:description" content="Explore the lessons learned from developing a visualization app that assisted different teams in my company with aspect-based sentiment analysis (ABSA)." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://ouatu.ro/blog/mvp-tips/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2022-03-28T00:29:54+03:00" />
 <meta property="article:modified_time" content="2022-03-28T00:29:54+03:00" />
-
-<meta itemprop="name" content="MVP Tips">
-<meta itemprop="description" content="Some context I had a visualisation app I built for exploring if our aspect based sentimet analysis (ABSA) pipeline. The image below explains both what ABSA is and what the app did. Some people (backend people) in my company needed to explore text messages to see what problems users complain about and how many messages they write about each problem. So I took the visualisation app and the ABSA pipeline and just ran it on the new dataset."><meta itemprop="datePublished" content="2022-03-28T00:29:54+03:00" />
+<meta itemprop="name" content="MVP Tips for Analytics Tools">
+<meta itemprop="description" content="Explore the lessons learned from developing a visualization app that assisted different teams in my company with aspect-based sentiment analysis (ABSA)."><meta itemprop="datePublished" content="2022-03-28T00:29:54+03:00" />
 <meta itemprop="dateModified" content="2022-03-28T00:29:54+03:00" />
-<meta itemprop="wordCount" content="362">
+<meta itemprop="wordCount" content="401">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="MVP Tips"/>
-<meta name="twitter:description" content="Some context I had a visualisation app I built for exploring if our aspect based sentimet analysis (ABSA) pipeline. The image below explains both what ABSA is and what the app did. Some people (backend people) in my company needed to explore text messages to see what problems users complain about and how many messages they write about each problem. So I took the visualisation app and the ABSA pipeline and just ran it on the new dataset."/>
+<meta name="twitter:title" content="MVP Tips for Analytics Tools"/>
+<meta name="twitter:description" content="Explore the lessons learned from developing a visualization app that assisted different teams in my company with aspect-based sentiment analysis (ABSA)."/>
 
 <!--[if lte IE 9]>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
-<![endif]-->
-
-<!--[if lt IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script> <!
+[endif]--> <!--[if lt IE 9]>
   <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
-<![endif]-->
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script> <!
+[endif]-->
 
 </head>
 <body>
@@ -136,7 +140,7 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">MVP Tips</h1>
+      <h1 class="post-title">MVP Tips for Analytics Tools</h1>
 
       <div class="post-meta">
         <span class="post-time"> 2022-03-28 </span>
@@ -150,33 +154,53 @@
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#some-context">Some context</a></li>
-    <li><a href="#what-ive-learned">What I've learned</a></li>
-    <li><a href="#particular-for-analytics-tools">Particular for analytics tools</a></li>
+    <li><a href="#introduction">Introduction</a>
+      <ul>
+        <li><a href="#the-backstory-meeting-different-needs-with-one-app">The Backstory: Meeting Different Needs with One App</a>
+          <ul>
+            <li><a href="#ux-team-a-different-story">UX Team: A Different Story</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#what-ive-learned">What I&rsquo;ve Learned</a></li>
+    <li><a href="#particular-for-analytics-tools">Particular for Analytics Tools</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
   </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      <h1 id="some-context">Some context</h1>
-<p>I had a visualisation app I built for exploring if our aspect based sentimet analysis (ABSA) pipeline. The image below explains both what ABSA is and what the app did.
-<img src="/blog/absa-example.png" alt="ABSA image"></p>
-<p>Some people (backend people) in my company needed to explore text messages to see what problems users complain about and how many messages they write about each problem. So I took the visualisation app and the ABSA pipeline and just ran it on the new dataset. People were very hapy with this solution.</p>
-<p>Another set of people (UX people) wanted the exact same thing, so I followed the exact same steps.
-This time I said that I&rsquo;ll first sit with them to see how they use the app. I sit down with them one by one and let them navigate the app. One after another tried to click on visualisations to no prevail, struggled with what a named entity or a random sample is, ignored full pages because there were no visualisations by default.</p>
-<h1 id="what-ive-learned">What I've learned</h1>
-<p>Don&rsquo;t give users the responsibility of finding the optimal way to solve their problem under the pretext of flexibility (they literally told me this). Put it another way, be opinionated.</p>
-<p>Don’t try to solve more than one problem. Put it another way, be opinionated.</p>
-<p>Get fast feedback on your opinionated design and iterate. Best way is to find a possible user, give them the app link and observe what they do.</p>
-<p>Try to record or take notes on the user interview.</p>
-<p>When iterating, you’ll see that you’ll probably delete code and become even more opinionated.</p>
-<p>Reuse code and you’ll see that an even simpler solution would have done a better job (even for the problem the reused code comes from).</p>
-<h1 id="particular-for-analytics-tools">Particular for analytics tools</h1>
+      <h1 id="introduction">Introduction</h1>
+<p>Navigating the challenges of creating a user-friendly, effective analytics tool can be daunting. This post will share real-world experiences from developing a visualization app used for aspect-based sentiment analysis (ABSA). We&rsquo;ll dive into how it benefited backend and UX teams differently and offer some crucial takeaways for anyone involved in analytics tool development.</p>
+<p><img src="/blog/absa-example.png" alt="ABSA Workflow"></p>
+<h2 id="the-backstory-meeting-different-needs-with-one-app">The Backstory: Meeting Different Needs with One App</h2>
+<p>Initially, I created a visualization app to explore our ABSA pipeline. It quickly gained traction among the backend team who needed to explore text messages for customer complaints. Upon applying the ABSA pipeline to a new dataset, the team found the tool extremely useful.</p>
+<h3 id="ux-team-a-different-story">UX Team: A Different Story</h3>
+<p>On the flip side, the UX team had a more challenging experience. Despite having similar needs, they struggled with aspects like understanding named entities and random samples. When sitting down with them for user testing, I realized they often ignored full pages because there were no visualisations by default on the page.</p>
+<h1 id="what-ive-learned">What I&rsquo;ve Learned</h1>
 <ul>
-<li>be sure that it’s clear what controls are associated with what view.</li>
-<li>always offer a preview of what the data will be like or some cues that visualisations will be displayed if they do something with your buttons and sliders; otherwise users won&rsquo;t even try to operate your sliders since they assume there is nothing interesting to be seen there.</li>
-<li>don&rsquo;t underestimate the power of a good data grid</li>
+<li>
+<p><strong>Be Opinionated in Design</strong>: Don&rsquo;t overload your users with choices. Make intelligent decisions on their behalf to guide them toward solving their problems effectively.</p>
+</li>
+<li>
+<p><strong>Focus on Solving One Problem</strong>: By trying to tackle multiple issues, you risk diluting the tool&rsquo;s effectiveness. Stick to solving one problem well.</p>
+</li>
+<li>
+<p><strong>Get Fast Feedback</strong>: Rapid feedback cycles are essential. Observe users in action, record or take notes during these user interviews, and iterate your design based on this feedback.</p>
+</li>
+<li>
+<p><strong>Simplify and Reuse Code</strong>: Iteration often leads to deleting code. You&rsquo;ll find that a simpler solution can often do a better job, even for the original problem the code was solving.</p>
+</li>
 </ul>
+<h1 id="particular-for-analytics-tools">Particular for Analytics Tools</h1>
+<ul>
+<li><strong>Be Clear About Controls and Views</strong>: Ensure that it&rsquo;s clear which controls are associated with what view.</li>
+<li><strong>Always Offer a Preview</strong>: Offer a preview or some cues that visualizations will be displayed when users interact with your controls like buttons and sliders. Otherwise, users might not even attempt to use them.</li>
+<li><strong>Don&rsquo;t Underestimate a Good Data Grid</strong>: A well-designed data grid can be a powerful tool for data analysis, so don&rsquo;t underestimate its impact.</li>
+</ul>
+<h1 id="conclusion">Conclusion</h1>
+<p>Creating an analytics tool that satisfies all types of users is challenging. The key is to be opinionated in your design choices, focus on solving one core problem, and continually seek user feedback for iterative improvement. Following these principles won&rsquo;t just make your tool more effective; it&rsquo;ll make it indispensable.</p>
 
     </div>
 
@@ -200,7 +224,7 @@ This time I said that I&rsquo;ll first sit with them to see how they use the app
       <nav class="post-nav">
         
         <a class="next" href="/blog/closures/">
-            <span class="next-text nav-default">Friendly Python Clojures in an automatic Text Annotator</span>
+            <span class="next-text nav-default">Closures and Partial Function Application in Python: A NLP Use Case</span>
             <span class="next-text nav-mobile">Next</span>
             <i class="iconfont icon-right"></i>
           </a>
@@ -252,7 +276,7 @@ This time I said that I&rsquo;ll first sit with them to see how they use the app
   <span class="copyright-year">
     &copy; 
     2017 - 
-    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>Bogdan</span>
+    2023<span class="heart"><i class="iconfont icon-heart"></i></span><span>Bogdan</span>
   </span>
 </div>
 
