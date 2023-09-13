@@ -17,7 +17,7 @@ Initially, I created a visualization app to explore our ABSA pipeline. It quickl
 
 ### UX Team: A Different Story
 
-On the flip side, the UX team had a more challenging experience. Despite having similar needs, they struggled with aspects like understanding named entities and random samples. When sitting down with them for user testing, I realized they often ignored full pages because there were no visualisations by default on the page.
+On the flip side, the UX team had a more challenging experience. Despite having similar needs, they struggled with aspects like understanding jargon on the website such as named entities or random samples. When sitting down with them for user testing, I realized they often ignored full pages because there were no visualisations by default on the page.
 
 # What I've Learned
 
@@ -25,9 +25,9 @@ On the flip side, the UX team had a more challenging experience. Despite having 
 
 - **Focus on Solving One Problem**: By trying to tackle multiple issues, you risk diluting the tool's effectiveness. Stick to solving one problem well.
 
-- **Get Fast Feedback**: Rapid feedback cycles are essential. Observe users in action, record or take notes during these user interviews, and iterate your design based on this feedback.
+- **Get Fast Feedback**: Best way is to find a possible user, give them the app link and observe what they do next. Observe users in action, record or take notes during these user interviews, and iterate your design based on this feedback.
 
-- **Simplify and Reuse Code**: Iteration often leads to deleting code. You'll find that a simpler solution can often do a better job, even for the original problem the code was solving.
+- **Simplify Code**: When reusing code for a diferent project, you’ll find that an even simpler solution would have done a better job (even for the original problem)and you'll end up deleting lots of it.
 
 # Particular for Analytics Tools
 
